@@ -56,8 +56,10 @@
 
 <div class="auth-container">
   <h2>Sign Up with Google</h2>
-  <a href="{% provider_login_url 'google' %}">Login with Google</a>
-  
-  </a>
+  <a href="{% provider_login_url 'google' %}" class="google-btn">
+  <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo" style="height: 20px; vertical-align: middle; margin-right: 10px;">
+  Sign Up with Google
+</a>
+
 </div>
 {% endblock content %}
