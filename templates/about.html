@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <!-- About Us Section -->
+    <div class="section about-us">
+        <h2>About Us</h2>
+        <p>At {{ store_name|default:"Your Furniture Store" }}, we believe that the right furniture can transform your space into something extraordinary. Founded in {{ founding_year|default:"Year" }}, we’ve made it our mission to offer high-quality, stylish, and functional furniture for every home. Whether you’re looking to furnish a new space or upgrade your current setup, our wide range of products ensures you'll find the perfect pieces to suit your needs and tastes.</p>
+    </div>
+
+    <!-- Vision Section -->
+    <div class="section vision">
+        <h2>Our Vision</h2>
+        <p>Our vision is to be the leading provider of premium, yet affordable furniture, helping our customers create beautiful and comfortable spaces. We are committed to using sustainable materials and offering furniture that not only looks good but is built to last.</p>
+    </div>
+
+    <!-- Meet Our Team Section -->
+    <div class="section team-section">
+        <h2>CEO and Founder</h2>
+        <div class="team">
+            <div class="team-member">
+                <img src="{% static 'gg.jpg' %}" alt="Uttam Bikram Thapa">
+                <h3>Uttam Bikram Thapa & Rama Thapa</h3>
+                <p></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Why Choose Us Section -->
+    <div class="section why-choose-us">
+        <h2>Why Choose Us?</h2>
+        <ul>
+            <li><strong>Quality Craftsmanship:</strong> Our furniture is built with the highest quality materials and expert craftsmanship.</li>
+            <li><strong>Affordable Prices:</strong> We offer competitive pricing without compromising on quality.</li>
+            <li><strong>Customer Satisfaction:</strong> Our customer service team is always available to help you with any inquiries or issues.</li>
+            <li><strong>Sustainability:</strong> We prioritize eco-friendly practices in our production process and materials.</li>
+        </ul>
+    </div>
+</div>
+
+<style>
+    .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+    .section {
+        margin-bottom: 50px;
+    }
+
+    /* Section titles white like navbar font */
+    .section h2 {
+        font-size: 2.5rem;
+        color: #fff; /* white text */
+        text-align: center;
+        margin-bottom: 25px;
+        font-weight: 700;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+    }
+
+    .section p {
+        color: #333;
+        font-size: 1.125rem;
+        line-height: 1.7;
+        max-width: 900px;
+        margin: 0 auto;
+        text-align: center;
+        font-weight: 400;
+    }
+
+    .team {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        flex-wrap: wrap;
+    }
+
+    .team-member {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        padding: 30px 20px;
+        text-align: center;
+        width: 260px;
+        transition: transform 0.3s ease;
+        cursor: default;
+    }
+
+    .team-member:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .team-member img {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .team-member h3 {
+        font-size: 1.25rem;
+        color: #333;
+        margin-bottom: 8px;
+        font-weight: 600;
+    }
+
+    .team-member p {
+        color: #777;
+        font-size: 1rem;
+    }
+
+    .why-choose-us ul {
+        list-style: none;
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 0;
+    }
+
+    .why-choose-us li {
+        font-size: 1.125rem;
+        color: #444;
+        margin-bottom: 18px;
+        text-align: center;
+        font-weight: 500;
+    }
+
+    /* Changed strong highlight color — no orange */
+    .why-choose-us li strong {
+        color: #003366; /* dark blue */
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 768px) {
+        .team {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+</style>
+{% endblock content %}

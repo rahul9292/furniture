@@ -1,0 +1,199 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  /* Checkout container */
+  .checkout-container {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    padding: 25px;
+    max-width: 900px;
+    margin: 40px auto;
+    font-family: 'Poppins', sans-serif;
+    color: #1e1e2f;
+  }
+
+  .checkout-container h1, 
+  .checkout-container h2, 
+  .checkout-container h3 {
+    text-align: center;
+    color: #1e1e2f;
+    margin-bottom: 20px;
+  }
+
+  .checkout-container form {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .checkout-container label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #2c2c3e;
+  }
+
+  .checkout-container input, 
+  .checkout-container select, 
+  .checkout-container textarea {
+    width: 100%;
+    padding: 10px 14px;
+    margin-bottom: 18px;
+    border: 1.8px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    color: #1e1e2f;
+    transition: border-color 0.3s ease;
+  }
+
+  .checkout-container input:focus, 
+  .checkout-container select:focus, 
+  .checkout-container textarea:focus {
+    outline: none;
+    border-color: #1e1e2f;
+    box-shadow: 0 0 5px rgba(30, 30, 47, 0.5);
+  }
+
+  .checkout-container .btn {
+    width: 100%;
+    max-width: 300px;
+    background: linear-gradient(90deg, #1e1e2f 0%, #2c2c3e 100%);
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 14px 0;
+    margin: 20px auto 0;
+    display: block;
+    transition: background 0.3s ease;
+  }
+
+  .checkout-container .btn:hover {
+    background: linear-gradient(90deg, #2c2c3e 0%, #1e1e2f 100%);
+  }
+
+  .checkout-container ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .checkout-container li {
+    padding: 10px 0;
+    border-bottom: 1px solid #e1e1e6;
+    color: #2c2c3e;
+    font-weight: 500;
+  }
+
+  .checkout-container li:last-child {
+    border-bottom: none;
+  }
+
+  /* Medium devices (tablets) */
+  @media (max-width: 768px) {
+    .checkout-container {
+      padding: 20px;
+      margin: 20px;
+    }
+
+    .checkout-container input, 
+    .checkout-container select, 
+    .checkout-container textarea {
+      font-size: 14px;
+    }
+
+    .checkout-container .btn {
+      font-size: 15px;
+      padding: 12px 0;
+    }
+  }
+
+  /* Small devices (phones) */
+  @media (max-width: 480px) {
+    .checkout-container {
+      padding: 15px 12px;
+      margin: 15px 10px;
+      max-width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+    }
+
+    h1, h2, h3 {
+      font-size: 22px;
+      margin-bottom: 15px;
+    }
+
+    .checkout-container form {
+      max-width: 100%;
+    }
+
+    label {
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    input, select, textarea {
+      font-size: 14px;
+      padding: 12px 10px;
+      margin-bottom: 16px;
+      border-radius: 6px;
+    }
+
+    .checkout-container .btn {
+      max-width: 100%;
+      font-size: 16px;
+      padding: 14px 0;
+      border-radius: 8px;
+      margin-top: 15px;
+    }
+
+    .checkout-container ul {
+      padding-left: 15px;
+    }
+
+    .checkout-container li {
+      font-size: 14px;
+      padding: 8px 0;
+    }
+  }
+</style>
+
+<div class="checkout-container">
+  <h1>Checkout</h1>
+  <h2>Review Your Order & Enter Details</h2>
+  <div class="order-summary">
+    <h3>Order Summary</h3>
+    <p><strong>Total Price:</strong> ₹{{ total_price }}</p>
+
+    {% if cart_items %}<ul>
+        {% for item in cart_items %}
+          <li><strong>{{ item.name }}</strong> (x{{ item.quantity }}) - ₹{{ item.total }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+
+  <form action="{% url 'process_order' %}" method="post">
+    {% csrf_token %}
+    <h3>Shipping Details</h3>
+
+    <label for="address">Shipping Address</label>
+    <textarea id="address" name="address" rows="3" required placeholder="Enter your full address"></textarea>
+
+    <label for="city">City</label>
+    <input type="text" id="city" name="city" required placeholder="Enter your city">
+
+    <label for="state">State</label>
+    <input type="text" id="state" name="state" required placeholder="Enter your state">
+
+    <label for="phone">Phone Number</label>
+    <input type="tel" id="phone" name="phone" required placeholder="Enter your phone number" pattern="[0-9]{10}">
+
+    <input type="hidden" name="total_price" value="{{ total_price }}">
+
+    <button type="submit" class="btn">Submit Order</button>
+  </form>
+</div>
+{% endblock content %}

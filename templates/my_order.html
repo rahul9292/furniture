@@ -1,0 +1,224 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+  .order-container {
+    max-width: 700px;
+    margin: 50px auto;
+    padding: 35px 40px;
+    background: #fff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    font-family: 'Poppins', sans-serif;
+    color: #1e1e2f;
+  }
+
+  .order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+  }
+
+  .order-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .order-total {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1e1e2f;
+    background: #f4f5fa; /* Light background */
+    padding: 10px 20px;
+    border-radius: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border: 2px solid #1e1e2f; /* subtle border for emphasis */
+    margin-top: 10px;
+  }
+
+  .order-info p {
+    font-size: 1rem;
+    margin: 8px 0;
+    color: #555;
+    word-wrap: break-word;
+    max-width: 100%;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+  }
+
+  thead tr {
+    background-color: #1e1e2f;
+    color: #fff;
+    text-align: left;
+  }
+
+  th, td {
+    padding: 14px 15px;
+    font-size: 16px;
+    vertical-align: middle;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+
+  tbody tr:hover {
+    background-color: #e6e6e6;
+  }
+
+  .product-image {
+    max-height: 70px;
+    border-radius: 8px;
+    margin-bottom: 6px;
+    margin-right: 12px;
+    vertical-align: middle;
+  }
+
+  td > div {
+    display: inline-block;
+    vertical-align: middle;
+    word-wrap: break-word;
+    max-width: calc(100% - 80px);
+  }
+
+  .no-items {
+    text-align: center;
+    font-style: italic;
+    color: #888;
+  }
+
+  /* Responsive tweak */
+  @media (max-width: 600px) {
+    .order-container {
+      margin: 20px 15px;
+      padding: 25px 20px;
+      max-width: 100%;
+    }
+
+    .order-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .order-total {
+      margin-top: 15px;
+    }
+
+    table, thead, tbody, th, td, tr {
+      display: block;
+      width: 100%;
+    }
+
+    thead tr {
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+    }
+
+    tbody tr {
+      margin-bottom: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      background: #fff;
+      padding: 15px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    tbody tr td {
+      padding: 10px 0;
+      border: none;
+      width: 50%;
+      display: flex;
+      align-items: center;
+    }
+
+    tbody tr td:nth-child(1) {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    tbody tr td:nth-child(1) img.product-image {
+      margin-right: 12px;
+      max-height: 60px;
+    }
+
+    tbody tr td::before {
+      content: attr(data-label);
+      font-weight: 700;
+      flex: 1 0 50%;
+      color: #1e1e2f;
+    }
+
+    tbody tr td:nth-child(1)::before {
+      content: "Product:";
+      flex: none;
+    }
+
+    tbody tr td:nth-child(2)::before {
+      content: "Price (₹):";
+    }
+
+    tbody tr td:nth-child(3)::before {
+      content: "Quantity:";
+    }
+
+    tbody tr td:nth-child(4)::before {
+      content: "Total (₹):";
+    }
+  }
+</style>
+
+<section class="order-container">
+
+  <div class="order-header">
+    <h1>📦 Order Details</h1>
+    <div class="order-total">Total: ₹{{ order.total_price|floatformat:2 }}</div>
+  </div>
+
+  <div class="order-info">
+    <p><strong>Order ID:</strong> {{ order.id }}</p>
+    <p><strong>Placed on:</strong> {{ order.created_at|date:"F j, Y, g:i a" }}</p>
+    <p><strong>Address:</strong> {{ order.address }}, {{ order.city }}, {{ order.state }}</p>
+    <p><strong>Phone:</strong> {{ order.phone }}</p>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Price (₹)</th>
+        <th>Quantity</th>
+        <th>Total (₹)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in order_items %}
+      <tr>
+        <td data-label="Product:">
+          {% if item.product.image %}
+          <img src="{{ item.product.image.url }}" class="product-image" alt="{{ item.product.name|default:'Product Image' }}">
+          {% endif %}
+          <div>{{ item.product.name }}</div>
+        </td>
+        <td data-label="Price (₹):">₹{{ item.product.price|floatformat:2 }}</td>
+        <td data-label="Quantity:">{{ item.quantity }}</td>
+        <td data-label="Total (₹):">₹{{ item.subtotal|floatformat:2 }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="4" class="no-items">No items found in this order.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</section>
+{% endblock %}

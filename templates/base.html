@@ -1,0 +1,315 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <link rel="icon" type="image/png" href="{% static 'media/tab.jpg' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jay Ganesh Furniture</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(120deg, #a0522d, #deb887); /* sienna to burlywood */
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(139, 69, 19, 0.9); /* saddle brown semi-transparent */
+            padding: 15px 30px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            flex-wrap: wrap;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: 700;
+            text-decoration: none;
+            color: #fff8dc;
+            text-shadow: 1px 1px 3px #000;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li {
+            margin: 0 15px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #fff8dc;
+            font-size: 18px;
+            position: relative;
+            transition: color 0.3s ease;
+            padding: 6px 10px;
+            border-radius: 6px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 248, 220, 0.1);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: #fff8dc;
+            left: 50%;
+            bottom: -5px;
+            transition: 0.3s ease-in-out;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 5px 10px;
+            border-radius: 25px;
+            margin-left: 20px;
+        }
+
+        .search-bar input {
+            padding: 8px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            outline: none;
+            width: 160px;
+            font-size: 16px;
+            color: #fff;
+        }
+
+        .search-bar input::placeholder {
+            color: #eee;
+        }
+
+        .search-bar button {
+            padding: 8px 12px;
+            background: #fff8dc;
+            border: none;
+            border-radius: 20px;
+            color: #a0522d;
+            cursor: pointer;
+            font-weight: bold;
+            margin-left: 5px;
+            transition: 0.3s;
+        }
+
+        .search-bar button:hover {
+            background: #a0522d;
+            color: #fff;
+        }
+
+        .cart-icon {
+            font-size: 24px;
+            color: #fff8dc;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .cart-icon:hover {
+            color: #ffd700;
+        }
+
+        /* Mobile Menu */
+        #menu-toggle {
+            display: none;
+        }
+
+        .menu-icon {
+            display: none;
+            font-size: 30px;
+            cursor: pointer;
+            color: #fff8dc;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .menu-icon {
+                display: block;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                width: 100%;
+                display: none;
+                background: rgba(139, 69, 19, 0.95);
+                padding: 10px 0;
+            }
+
+            .nav-links li {
+                margin: 10px 0;
+                text-align: center;
+                width: 100%;
+            }
+
+            .search-bar {
+                margin: 10px 0;
+            }
+
+            #menu-toggle:checked + .menu-icon + .nav-links {
+                display: flex;
+            }
+        }
+
+        /* Responsive Enhancements for smaller screens */
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 15px 15px;
+            }
+
+            .logo {
+                font-size: 24px;
+                margin-bottom: 8px;
+            }
+
+            .search-bar {
+                width: 100%;
+                margin: 10px 0;
+                order: 3; /* Move below nav links on small screens */
+            }
+
+            .search-bar input {
+                width: 70%;
+                font-size: 14px;
+            }
+
+            .search-bar button {
+                padding: 8px 10px;
+                font-size: 14px;
+            }
+
+            .nav-links {
+                width: 100%;
+            }
+
+            .nav-links li {
+                margin: 8px 0;
+            }
+
+            .cart-icon {
+                margin-left: 0;
+                margin-top: 10px;
+                font-size: 28px;
+                order: 4; /* Put below search bar */
+            }
+        }
+
+        /* Make sure the nav items wrap if too long */
+        .navbar {
+            flex-wrap: wrap;
+        }
+
+        /* Allow nav-links to wrap if needed */
+        .nav-links {
+            flex-wrap: wrap;
+        }
+
+        /* For links, ensure enough padding and bigger tap targets */
+        .nav-links a {
+            padding: 10px 14px;
+            font-size: 16px;
+        }
+
+        /* Slightly reduce font size on medium phones */
+        @media (max-width: 600px) {
+            .nav-links a {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <!-- Logo -->
+     <a href="{% url 'home' %}" class="logo" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+    <img src="{% static 'furniture logo.webp' %}" alt="Kaaji Logo" style="height: 42px; width: auto; filter: drop-shadow(0 0 4px #000);">
+    <span style="font-size: 30px; font-weight: 700; color: #fff8dc; text-shadow: 1px 1px 3px #000;">KAAJI furniture</span>
+</a>
+
+
+
+        <!-- Mobile Toggle -->
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle" class="menu-icon">☰</label>
+
+        <!-- Nav Links -->
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'contactus' %}">Contact us</a></li>
+
+            {% if user.is_authenticated %}
+                {% if not user.is_staff %}
+                <li style="position: relative;">
+                    <a href="{% url 'latest_order_detail' %}" style="position: relative;">
+                        My Order
+                        {% if order_count > 0 %}
+                            <span style="position: absolute; top: -10px; right: -20px; background-color: red; color: white; border-radius: 50%; padding: 2px 8px; font-size: 12px;">
+                                {{ order_count }}
+                            </span>
+                        {% endif %}
+                    </a>
+                </li>
+                {% endif %}
+                
+                <li><a href="{% url 'account_logout' %}">logout</a></li>
+            {% else %}
+                <li><a href="{% url 'signup' %}">signup</a></li>
+            {% endif %}
+
+            {% if user.is_staff %}
+            <li>
+                <a href="{% url 'admin-orders' %}">
+                    View Orders
+                    {% if order_count > 0 %}
+                        <span style="background: white; color: red; padding: 2px 8px; border-radius: 12px; font-weight: bold;">
+                            {{ order_count }}
+                        </span>
+                    {% endif %}
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+
+        <!-- Search Bar -->
+        <form method="get" action="{% url 'search_results' %}" class="search-bar">
+            <input type="text" name="q" placeholder="Search...">
+            <button type="submit">🔍</button>
+        </form>
+
+        <!-- Cart -->
+        {% if user.is_authenticated and not user.is_staff %}
+            <a href="{% url 'view_cart' %}" class="cart-icon">🛒</a>
+        {% endif %}
+    </nav>
+
+    {% block content %}
+    {% endblock content %}
+</body>
+</html>

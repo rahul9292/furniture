@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="padding: 40px; font-family: Arial, sans-serif; background-color: #f9f9f9; color: #333;">
+    <h2 style="text-align: center; margin-bottom: 30px; color: #222;">🧾 Admin - Orders by Customer</h2>
+
+    {% regroup orders by customer as customer_orders %}
+
+    {% for group in customer_orders %}
+    <div style="background: white; padding: 20px; margin-bottom: 40px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+        <h3 style="margin-bottom: 15px; color: #007BFF;">
+            Customer: {{ group.grouper.get_full_name|default:group.grouper.username }}
+        </h3>
+
+        <p>
+            <strong>Email:</strong> {{ group.grouper.email }}<br>
+        </p>
+
+        {% for order in group.list %}
+        <div style="margin-bottom: 30px; border: 1px solid #ddd; border-radius: 6px; padding: 15px;">
+            <h4 style="margin-bottom: 10px; color: #444;">
+                Order #{{ order.id }} — Placed on {{ order.created_at|date:"M d, Y" }}
+            </h4>
+
+            <p>
+                <strong>Phone:</strong> {{ order.phone }}<br>
+                <strong>Address:</strong> {{ order.address }}, {{ order.city }}, {{ order.state }}<br>
+                <strong>Total Price:</strong> ₹{{ order.total_price|floatformat:2 }}
+            </p>
+
+            <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                <thead style="background-color: #f0f0f0; color: #555; font-weight: 600;">
+                    <tr>
+                        <th style="padding: 10px; text-align: left; width: 100px;">Product Image</th>
+                        <th style="padding: 10px; text-align: left;">Product Name</th>
+                        <th style="padding: 10px; text-align: center; width: 80px;">Quantity</th>
+                        <th style="padding: 10px; text-align: right; width: 100px;">Price (₹)</th>
+                        <th style="padding: 10px; text-align: right; width: 120px;">Subtotal (₹)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in order.items.all %}
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 10px;">
+                            {% if item.product.image %}
+                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" style="height: 60px; object-fit: contain; border-radius: 4px; border: 1px solid #ccc;">
+                            {% else %}
+                            <span style="color: #999; font-size: 12px;">No image</span>
+                            {% endif %}
+                        </td>
+                        <td style="padding: 10px; vertical-align: middle;">{{ item.product.name }}</td>
+                        <td style="padding: 10px; text-align: center; vertical-align: middle;">{{ item.quantity }}</td>
+                        <td style="padding: 10px; text-align: right; vertical-align: middle;">₹{{ item.product.price|floatformat:2 }}</td>
+                        <td style="padding: 10px; text-align: right; vertical-align: middle;">₹{{ item.subtotal|floatformat:2 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endfor %}
+    </div>
+    {% empty %}
+        <p style="text-align:center; font-size: 18px; color: #777;">No orders found.</p>
+    {% endfor %}
+</div>
+
+<style>
+  /* Responsive tweaks */
+  @media (max-width: 768px) {
+    div[style*="padding: 40px"] {
+      padding: 20px 15px !important;
+    }
+
+    h2 {
+      font-size: 1.6rem !important;
+    }
+
+    h3 {
+      font-size: 1.2rem !important;
+    }
+
+    h4 {
+      font-size: 1rem !important;
+    }
+
+    table, thead, tbody, th, td, tr {
+      display: block;
+      width: 100% !important;
+    }
+
+    thead tr {
+      display: none;
+    }
+
+    tbody tr {
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    tbody tr td {
+      padding: 8px 10px !important;
+      text-align: left !important;
+      position: relative;
+      padding-left: 50%;
+      border: none !important;
+      border-bottom: 1px solid #eee !important;
+      vertical-align: top !important;
+    }
+
+    tbody tr td:last-child {
+      border-bottom: 0 !important;
+    }
+
+    tbody tr td::before {
+      position: absolute;
+      top: 8px;
+      left: 15px;
+      width: 45%;
+      padding-right: 10px;
+      white-space: nowrap;
+      font-weight: 600;
+      color: #555;
+      content: attr(data-label);
+    }
+
+    tbody tr td:nth-child(1)::before { content: "Product Image"; }
+    tbody tr td:nth-child(2)::before { content: "Product Name"; }
+    tbody tr td:nth-child(3)::before { content: "Quantity"; }
+    tbody tr td:nth-child(4)::before { content: "Price (₹)"; }
+    tbody tr td:nth-child(5)::before { content: "Subtotal (₹)"; }
+
+    img {
+      height: 50px !important;
+      max-width: 100% !important;
+    }
+  }
+</style>
+{% endblock %}

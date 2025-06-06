@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+  .contact-page {
+    max-width: 600px;
+    margin: 80px auto;
+    padding: 40px 30px;
+    font-family: 'Poppins', sans-serif;
+    color: #eee;
+    text-align: center;
+    background: #00264d; /* Deep blue background */
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 38, 77, 0.5); /* subtle shadow in main color */
+    position: relative;
+    overflow: hidden;
+    border: 2px solid #004080; /* solid border with main blue */
+  }
+
+  /* Subtle glowing border animation */
+  .contact-page::before {
+    content: "";
+    position: absolute;
+    top: -4px; left: -4px; right: -4px; bottom: -4px;
+    border-radius: 19px;
+    background: transparent;
+    box-shadow: 0 0 15px 4px rgba(0, 64, 128, 0.5);
+    opacity: 0.8;
+    animation: pulseGlow 4s ease-in-out infinite;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% {
+      box-shadow: 0 0 15px 4px rgba(0, 64, 128, 0.5);
+      opacity: 0.8;
+    }
+    50% {
+      box-shadow: 0 0 25px 8px rgba(0, 64, 128, 0.9);
+      opacity: 1;
+    }
+  }
+
+  .contact-page h1 {
+    margin-bottom: 30px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 3rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    animation: fadeInDown 1s ease forwards;
+  }
+
+  .contact-info p {
+    font-size: 1.25rem;
+    margin: 16px 0;
+    color: #cbd5e1; /* lighter blue-gray */
+    opacity: 0;
+    animation: fadeInUp 1s ease forwards;
+  }
+
+  .contact-info p:nth-child(1) {
+    animation-delay: 0.3s;
+  }
+  .contact-info p:nth-child(2) {
+    animation-delay: 0.5s;
+  }
+  .contact-info p:nth-child(3) {
+    animation-delay: 0.7s;
+  }
+
+  .social-links {
+    margin-top: 35px;
+    opacity: 0;
+    animation: fadeInUp 1s ease forwards;
+    animation-delay: 1s;
+  }
+
+  .social-links a {
+    margin: 0 20px;
+    display: inline-block;
+    font-size: 2rem;
+    color: #004080;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .social-links a::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 3px;
+    background: #003366;
+    left: 0;
+    bottom: -6px;
+    transition: width 0.3s ease;
+    border-radius: 3px;
+  }
+
+  .social-links a:hover {
+    color: #00264d;
+  }
+
+  .social-links a:hover::after {
+    width: 100%;
+  }
+
+  @keyframes fadeInDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
+<div class="contact-page" role="main" aria-label="Contact information">
+  <h1>Contact Us</h1>
+  <div class="contact-info">
+    <p>📞 Phone: +1 (555) 123-4567</p>
+    <p>📧 Email: info@kaajifurniture.com</p>
+    <p>📍 Address: 123 Furniture Street, Design City</p>
+  </div>
+
+  <div class="social-links" aria-label="Social media links">
+    <a href="https://facebook.com/kaajifurniture" target="_blank" aria-label="Facebook">🔵 Facebook</a>
+    <a href="https://instagram.com/kaajifurniture" target="_blank" aria-label="Instagram">📸 Instagram</a>
+  </div>
+</div>
+{% endblock %}

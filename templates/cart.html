@@ -1,0 +1,300 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+  .cart-container {
+    max-width: 700px;
+    margin: 50px auto;
+    background: #fff;
+    padding: 40px 35px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    font-family: 'Poppins', sans-serif;
+    color: #1e1e2f;
+  }
+
+  h1 {
+    text-align: center;
+    font-weight: 700;
+    font-size: 28px;
+    margin-bottom: 35px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+  }
+
+  thead tr {
+    background: linear-gradient(135deg, #1e1e2f, #2c2c3e);
+    color: #fff;
+  }
+
+  th, td {
+    padding: 14px 18px;
+    font-size: 16px;
+    text-align: center;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: #f4f5fa;
+  }
+
+  tbody tr:hover {
+    background-color: #d6eaff;
+  }
+
+  .product-image {
+    max-width: 90px;
+    max-height: 90px;
+    border-radius: 12px;
+    margin: 0 auto 8px;
+    display: block;
+  }
+
+  /* Buttons */
+  .btn {
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+  }
+
+  .btn-remove {
+    background: linear-gradient(135deg, #f44336, #d32f2f);
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(244, 67, 54, 0.4);
+  }
+  .btn-remove:hover {
+    background: linear-gradient(135deg, #d32f2f, #b71c1c);
+    box-shadow: 0 8px 20px rgba(179, 28, 28, 0.5);
+  }
+
+  .btn-clear {
+    background: linear-gradient(135deg, #ff9800, #e68900);
+    color: #fff;
+    font-weight: 700;
+    margin: 0 auto 20px;
+    width: 160px;
+    display: block;
+    box-shadow: 0 4px 10px rgba(255, 152, 0, 0.4);
+  }
+  .btn-clear:hover {
+    background: linear-gradient(135deg, #e68900, #b26b00);
+    box-shadow: 0 8px 20px rgba(178, 107, 0, 0.5);
+  }
+
+  .btn-checkout {
+    background: linear-gradient(135deg, #1e1e2f, #2c2c3e);
+    color: #fff;
+    font-weight: 700;
+    margin: 0 auto;
+    width: 200px;
+    display: block;
+    box-shadow: 0 4px 10px rgba(30, 30, 47, 0.4);
+  }
+  .btn-checkout:hover {
+    background: linear-gradient(135deg, #2c2c3e, #1e1e2f);
+    box-shadow: 0 8px 20px rgba(44, 44, 62, 0.5);
+  }
+
+  /* Total Price */
+  h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1e1e2f;
+    text-align: right;
+    margin-bottom: 30px;
+  }
+
+  /* Messages */
+  .message-box {
+    text-align: center;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #155724;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+  }
+
+  /* Empty cart */
+  .empty-cart {
+    text-align: center;
+    font-size: 20px;
+    color: #888;
+    padding: 40px 0;
+  }
+  .empty-cart i {
+    font-size: 50px;
+    color: #ccc;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .cart-container {
+      padding: 30px 20px;
+    }
+    table, th, td {
+      font-size: 14px;
+    }
+    .btn {
+      padding: 10px 20px;
+      font-size: 14px;
+    }
+    h2 {
+      font-size: 18px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    /* Make the table rows stack vertically */
+    table, thead, tbody, th, td, tr {
+      display: block;
+      width: 100%;
+    }
+
+    thead tr {
+      /* Hide the header row on small devices */
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+    }
+
+    tbody tr {
+      margin-bottom: 25px;
+      background-color: #f4f5fa;
+      border-radius: 15px;
+      padding: 15px 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    tbody tr:hover {
+      background-color: #d6eaff;
+    }
+
+    tbody td {
+      text-align: left;
+      padding: 10px 15px;
+      position: relative;
+      padding-left: 50%;
+      font-size: 14px;
+      border: none;
+      border-bottom: 1px solid #ddd;
+    }
+
+    tbody td:last-child {
+      border-bottom: 0;
+      padding-left: 15px;
+    }
+
+    /* Add labels before each cell */
+    tbody td:before {
+      position: absolute;
+      top: 12px;
+      left: 15px;
+      width: 45%;
+      padding-right: 10px;
+      white-space: nowrap;
+      font-weight: 600;
+      color: #1e1e2f;
+      font-size: 14px;
+      content: attr(data-label);
+    }
+
+    .product-image {
+      max-width: 70px;
+      max-height: 70px;
+      margin-bottom: 6px;
+    }
+
+    /* Buttons take full width and margin */
+    .btn {
+      width: 100%;
+      padding: 12px 0;
+      font-size: 16px;
+      border-radius: 12px;
+      margin-top: 8px;
+      display: block;
+    }
+
+    .btn-clear, .btn-checkout {
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
+    h2 {
+      text-align: left;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+  }
+</style>
+
+<div class="cart-container">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message-box">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <h1>🛒 Your Cart</h1>
+
+    {% if cart_items %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price (₹)</th>
+                    <th>Quantity</th>
+                    <th>Total (₹)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                <tr>
+                    <td data-label="Product">
+                        {% if item.image %}
+                            <img src="{{ item.image }}" alt="{{ item.name }}" class="product-image">
+                        {% else %}
+                            <p>No image available</p>
+                        {% endif %}
+                        <br>
+                        {{ item.name }}
+                    </td>
+                    <td data-label="Price">₹{{ item.price }}</td>
+                    <td data-label="Quantity">{{ item.quantity }}</td>
+                    <td data-label="Total">₹{{ item.total }}</td>
+                    <td data-label="Actions">
+                        <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-remove">Remove</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Total Price: ₹{{ total_price }}</h2>
+        <a href="{% url 'clear_cart' %}" class="btn btn-clear">Clear Cart</a>
+
+        {% if not order_placed %}
+            <a href="{% url 'checkout' %}" class="btn btn-checkout">Proceed to order</a>
+        {% endif %}
+    {% else %}
+        <div class="empty-cart">
+            <i>🛒</i>
+            <p>Your cart is empty.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock content %}
