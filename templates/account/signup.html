@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load socialaccount %}
+
 {% block content %}
 <style>
   body {
@@ -55,8 +56,10 @@
 </style>
 
 <div class="auth-container">
-  <h2>Sign Up with Google</h2>
-  <a href="{% provider_login_url 'google' %}" class="google-btn">
+  <h2>Sign Up</h2>
+
+  <!-- 👇 Emoji-enhanced Google sign-in button -->
+    <a href="{% provider_login_url 'google' %}" class="google-btn">
   <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo" style="height: 20px; vertical-align: middle; margin-right: 10px;">
   Sign Up with Google
 </a>

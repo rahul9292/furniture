@@ -53,7 +53,7 @@ def view_cart(request):
     })
 
 
-@login_required(login_url='account_login')
+@login_required(login_url='signup')
 def add_to_cart(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     cart = request.session.get('cart', {})
@@ -71,7 +71,7 @@ def add_to_cart(request, product_id):
     return redirect('view_cart')
 
 
-@login_required(login_url='account_login')
+@login_required(login_url='signup')
 def remove_from_cart(request, product_id):
     cart = request.session.get('cart', {})
     cart.pop(str(product_id), None)
@@ -80,14 +80,14 @@ def remove_from_cart(request, product_id):
     return redirect('view_cart')
 
 
-@login_required(login_url='account_login')
+@login_required(login_url='signup')
 def clear_cart(request):
     request.session['cart'] = {}
     request.session.modified = True
     return redirect('view_cart')
 
 
-@login_required(login_url='account_login')
+@login_required(login_url='signup')
 def checkout(request):
     cart = request.session.get('cart', {})
     if not cart:
@@ -112,7 +112,7 @@ def checkout(request):
     })
 
 
-@login_required(login_url='account_login')
+@login_required(login_url='signup')
 def process_order(request):
     if request.method == "POST":
         address = request.POST.get('address')
