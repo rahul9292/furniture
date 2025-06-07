@@ -19,6 +19,12 @@
     margin-bottom: 35px;
   }
 
+  .top-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+  }
+
   table {
     width: 100%;
     border-collapse: collapse;
@@ -44,15 +50,34 @@
     background-color: #d6eaff;
   }
 
-  .product-image {
-    max-width: 90px;
-    max-height: 90px;
-    border-radius: 12px;
+  .product-image-container {
+    position: relative;
+    width: 90px;
+    height: 90px;
     margin: 0 auto 8px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #f4f5fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
     display: block;
   }
 
-  /* Buttons */
+  .no-image-placeholder {
+    color: #888;
+    font-size: 12px;
+    text-align: center;
+    padding: 5px;
+  }
+
   .btn {
     padding: 12px 25px;
     font-size: 16px;
@@ -64,6 +89,15 @@
     display: inline-block;
     text-decoration: none;
     text-align: center;
+    background: linear-gradient(135deg, #1e1e2f, #2c2c3e);
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(30, 30, 47, 0.4);
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .btn:hover {
+    background: linear-gradient(135deg, #2c2c3e, #1e1e2f);
+    box-shadow: 0 8px 20px rgba(44, 44, 62, 0.5);
   }
 
   .btn-remove {
@@ -76,36 +110,31 @@
     box-shadow: 0 8px 20px rgba(179, 28, 28, 0.5);
   }
 
-  .btn-clear {
-    background: linear-gradient(135deg, #ff9800, #e68900);
-    color: #fff;
-    font-weight: 700;
-    margin: 0 auto 20px;
-    width: 160px;
-    display: block;
-    box-shadow: 0 4px 10px rgba(255, 152, 0, 0.4);
-  }
-  .btn-clear:hover {
-    background: linear-gradient(135deg, #e68900, #b26b00);
-    box-shadow: 0 8px 20px rgba(178, 107, 0, 0.5);
-  }
-
-  .btn-checkout {
+  .btn-clear, .btn-checkout, .btn-continue {
     background: linear-gradient(135deg, #1e1e2f, #2c2c3e);
     color: #fff;
     font-weight: 700;
-    margin: 0 auto;
-    width: 200px;
-    display: block;
+    width: 100%;
     box-shadow: 0 4px 10px rgba(30, 30, 47, 0.4);
   }
-  .btn-checkout:hover {
+
+  .btn-clear:hover,
+  .btn-checkout:hover,
+  .btn-continue:hover {
     background: linear-gradient(135deg, #2c2c3e, #1e1e2f);
     box-shadow: 0 8px 20px rgba(44, 44, 62, 0.5);
   }
 
-  /* Total Price */
-  h2 {
+  .button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 250px;
+    margin: 0 auto;
+    align-items: center;
+  }
+
+  .total-price {
     font-size: 22px;
     font-weight: 700;
     color: #1e1e2f;
@@ -113,7 +142,6 @@
     margin-bottom: 30px;
   }
 
-  /* Messages */
   .message-box {
     text-align: center;
     padding: 12px;
@@ -126,7 +154,6 @@
     border: 1px solid #c3e6cb;
   }
 
-  /* Empty cart */
   .empty-cart {
     text-align: center;
     font-size: 20px;
@@ -140,103 +167,132 @@
     margin-bottom: 12px;
   }
 
-  /* Responsive */
   @media (max-width: 768px) {
     .cart-container {
       padding: 30px 20px;
+      margin: 30px 15px;
+      border-radius: 15px;
     }
-    table, th, td {
-      font-size: 14px;
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 25px;
     }
+
+    .top-actions {
+      justify-content: center;
+    }
+
+    table {
+      display: block;
+      overflow-x: auto;
+      margin-bottom: 25px;
+    }
+
+    .product-image-container {
+      width: 80px;
+      height: 80px;
+    }
+
     .btn {
-      padding: 10px 20px;
+      padding: 8px 16px;
       font-size: 14px;
     }
-    h2 {
-      font-size: 18px;
+
+    .button-group .btn {
+      width: 100%;
+      max-width: 220px;
     }
   }
 
   @media (max-width: 480px) {
-    /* Make the table rows stack vertically */
-    table, thead, tbody, th, td, tr {
-      display: block;
-      width: 100%;
+    .cart-container {
+      padding: 25px 15px;
     }
 
-    thead tr {
-      /* Hide the header row on small devices */
-      position: absolute;
-      top: -9999px;
-      left: -9999px;
+    h1 {
+      font-size: 22px;
+    }
+
+    table {
+      display: flex;
+      flex-direction: column;
+    }
+
+    thead {
+      display: none;
     }
 
     tbody tr {
-      margin-bottom: 25px;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
       background-color: #f4f5fa;
       border-radius: 15px;
-      padding: 15px 10px;
+      padding: 15px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
 
-    tbody tr:hover {
-      background-color: #d6eaff;
-    }
-
     tbody td {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
       text-align: left;
-      padding: 10px 15px;
-      position: relative;
-      padding-left: 50%;
-      font-size: 14px;
-      border: none;
-      border-bottom: 1px solid #ddd;
+      border-bottom: 1px solid #e0e0e0;
     }
 
     tbody td:last-child {
-      border-bottom: 0;
-      padding-left: 15px;
+      border-bottom: none;
+      justify-content: center;
     }
 
-    /* Add labels before each cell */
     tbody td:before {
-      position: absolute;
-      top: 12px;
-      left: 15px;
-      width: 45%;
-      padding-right: 10px;
-      white-space: nowrap;
+      content: attr(data-label);
       font-weight: 600;
       color: #1e1e2f;
-      font-size: 14px;
-      content: attr(data-label);
+      margin-right: 15px;
+      flex: 1;
     }
 
-    .product-image {
-      max-width: 70px;
-      max-height: 70px;
-      margin-bottom: 6px;
+    tbody td span {
+      flex: 1;
+      text-align: right;
     }
 
-    /* Buttons take full width and margin */
+    .product-cell {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .product-cell:before {
+      display: none;
+    }
+
+    .product-image-container {
+      width: 120px;
+      height: 120px;
+      margin-bottom: 12px;
+    }
+
     .btn {
-      width: 100%;
-      padding: 12px 0;
-      font-size: 16px;
-      border-radius: 12px;
-      margin-top: 8px;
-      display: block;
+      padding: 7px 14px;
+      font-size: 13px;
     }
 
-    .btn-clear, .btn-checkout {
+    .button-group .btn {
       width: 100%;
-      margin-bottom: 15px;
+      max-width: 200px;
     }
 
-    h2 {
-      text-align: left;
-      font-size: 20px;
-      margin-bottom: 20px;
+    .btn-remove {
+      width: 100%;
+      max-width: 200px;
+    }
+
+    .empty-cart i {
+      font-size: 60px;
     }
   }
 </style>
@@ -247,6 +303,10 @@
             <div class="message-box">{{ message }}</div>
         {% endfor %}
     {% endif %}
+
+    <div class="top-actions">
+        <a href="{% url 'home' %}" class="btn btn-continue">Continue Shopping</a>
+    </div>
 
     <h1>🛒 Your Cart</h1>
 
@@ -264,18 +324,19 @@
             <tbody>
                 {% for item in cart_items %}
                 <tr>
-                    <td data-label="Product">
-                        {% if item.image %}
-                            <img src="{{ item.image }}" alt="{{ item.name }}" class="product-image">
-                        {% else %}
-                            <p>No image available</p>
-                        {% endif %}
-                        <br>
-                        {{ item.name }}
+                    <td data-label="Product" class="product-cell">
+                        <div class="product-image-container">
+                            {% if item.image %}
+                                <img src="{{ item.image }}" alt="{{ item.name }}" class="product-image">
+                            {% else %}
+                                <div class="no-image-placeholder">No Image</div>
+                            {% endif %}
+                        </div>
+                        <span>{{ item.name }}</span>
                     </td>
-                    <td data-label="Price">₹{{ item.price }}</td>
-                    <td data-label="Quantity">{{ item.quantity }}</td>
-                    <td data-label="Total">₹{{ item.total }}</td>
+                    <td data-label="Price"><span>₹{{ item.price }}</span></td>
+                    <td data-label="Quantity"><span>{{ item.quantity }}</span></td>
+                    <td data-label="Total"><span>₹{{ item.total }}</span></td>
                     <td data-label="Actions">
                         <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-remove">Remove</a>
                     </td>
@@ -284,12 +345,14 @@
             </tbody>
         </table>
 
-        <h2>Total Price: ₹{{ total_price }}</h2>
-        <a href="{% url 'clear_cart' %}" class="btn btn-clear">Clear Cart</a>
-
-        {% if not order_placed %}
-            <a href="{% url 'checkout' %}" class="btn btn-checkout">Proceed to order</a>
-        {% endif %}
+        <div class="total-price">Total Price: ₹{{ total_price }}</div>
+        
+        <div class="button-group">
+            <a href="{% url 'clear_cart' %}" class="btn btn-clear">Clear Cart</a>
+            {% if not order_placed %}
+                <a href="{% url 'checkout' %}" class="btn btn-checkout">Proceed to Order</a>
+            {% endif %}
+        </div>
     {% else %}
         <div class="empty-cart">
             <i>🛒</i>

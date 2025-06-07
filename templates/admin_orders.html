@@ -1,141 +1,277 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div style="padding: 40px; font-family: Arial, sans-serif; background-color: #f9f9f9; color: #333;">
-    <h2 style="text-align: center; margin-bottom: 30px; color: #222;">🧾 Admin - Orders by Customer</h2>
+<div class="orders-wrapper">
+    <h2 class="orders-title">🧾 Admin - Orders by Customer</h2>
 
     {% regroup orders by customer as customer_orders %}
 
     {% for group in customer_orders %}
-    <div style="background: white; padding: 20px; margin-bottom: 40px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-        <h3 style="margin-bottom: 15px; color: #007BFF;">
+    <div class="customer-order">
+        <h3>
             Customer: {{ group.grouper.get_full_name|default:group.grouper.username }}
         </h3>
-
-        <p>
-            <strong>Email:</strong> {{ group.grouper.email }}<br>
+        <p class="customer-info">
+            <strong>Email:</strong> {{ group.grouper.email }}
         </p>
 
         {% for order in group.list %}
-        <div style="margin-bottom: 30px; border: 1px solid #ddd; border-radius: 6px; padding: 15px;">
-            <h4 style="margin-bottom: 10px; color: #444;">
-                Order #{{ order.id }} — Placed on {{ order.created_at|date:"M d, Y" }}
-            </h4>
+        <div class="order-box">
+            <div class="order-header">
+                <h4>Order #{{ order.id }}</h4>
+                <span class="order-date">{{ order.created_at|date:"M d, Y" }}</span>
+            </div>
 
-            <p>
-                <strong>Phone:</strong> {{ order.phone }}<br>
-                <strong>Address:</strong> {{ order.address }}, {{ order.city }}, {{ order.state }}<br>
-                <strong>Total Price:</strong> ₹{{ order.total_price|floatformat:2 }}
-            </p>
+            <div class="order-details">
+                <p><strong>Phone:</strong> {{ order.phone }}</p>
+                <p><strong>Address:</strong> {{ order.address }}, {{ order.city }}, {{ order.state }}</p>
+                <p class="total-price"><strong>Total Price:</strong> ₹{{ order.total_price|floatformat:2 }}</p>
+            </div>
 
-            <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
-                <thead style="background-color: #f0f0f0; color: #555; font-weight: 600;">
-                    <tr>
-                        <th style="padding: 10px; text-align: left; width: 100px;">Product Image</th>
-                        <th style="padding: 10px; text-align: left;">Product Name</th>
-                        <th style="padding: 10px; text-align: center; width: 80px;">Quantity</th>
-                        <th style="padding: 10px; text-align: right; width: 100px;">Price (₹)</th>
-                        <th style="padding: 10px; text-align: right; width: 120px;">Subtotal (₹)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for item in order.items.all %}
-                    <tr style="border-bottom: 1px solid #ddd;">
-                        <td style="padding: 10px;">
-                            {% if item.product.image %}
-                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" style="height: 60px; object-fit: contain; border-radius: 4px; border: 1px solid #ccc;">
-                            {% else %}
-                            <span style="color: #999; font-size: 12px;">No image</span>
-                            {% endif %}
-                        </td>
-                        <td style="padding: 10px; vertical-align: middle;">{{ item.product.name }}</td>
-                        <td style="padding: 10px; text-align: center; vertical-align: middle;">{{ item.quantity }}</td>
-                        <td style="padding: 10px; text-align: right; vertical-align: middle;">₹{{ item.product.price|floatformat:2 }}</td>
-                        <td style="padding: 10px; text-align: right; vertical-align: middle;">₹{{ item.subtotal|floatformat:2 }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="order-items">
+                <h5>Order Items:</h5>
+                {% for item in order.items.all %}
+                <div class="order-item">
+                    <div class="item-image">
+                        {% if item.product.image %}
+                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" loading="lazy">
+                        {% else %}
+                        <span class="no-img">No image</span>
+                        {% endif %}
+                    </div>
+                    <div class="item-details">
+                        <div class="item-name">{{ item.product.name }}</div>
+                        <div class="item-quantity">Qty: {{ item.quantity }}</div>
+                        <div class="item-price">₹{{ item.product.price|floatformat:2 }} each</div>
+                        <div class="item-subtotal">Subtotal: ₹{{ item.subtotal|floatformat:2 }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
         {% endfor %}
     </div>
     {% empty %}
-        <p style="text-align:center; font-size: 18px; color: #777;">No orders found.</p>
+        <p class="no-orders">No orders found.</p>
     {% endfor %}
 </div>
 
 <style>
-  /* Responsive tweaks */
-  @media (max-width: 768px) {
-    div[style*="padding: 40px"] {
-      padding: 20px 15px !important;
-    }
+.orders-wrapper {
+    padding: 20px;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    max-width: 100%;
+    box-sizing: border-box;
+}
 
-    h2 {
-      font-size: 1.6rem !important;
-    }
+.orders-title {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #222;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
 
-    h3 {
-      font-size: 1.2rem !important;
-    }
+.customer-order {
+    background: white;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
 
-    h4 {
-      font-size: 1rem !important;
-    }
+.customer-info {
+    margin-bottom: 15px;
+    color: #555;
+}
 
-    table, thead, tbody, th, td, tr {
-      display: block;
-      width: 100% !important;
-    }
+.order-box {
+    margin-top: 25px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px;
+    background: #fdfdfd;
+}
 
-    thead tr {
-      display: none;
-    }
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
 
-    tbody tr {
-      margin-bottom: 20px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 10px;
-      box-sizing: border-box;
-    }
+.order-header h4 {
+    margin: 0;
+    color: #444;
+    font-size: 1.1rem;
+}
 
-    tbody tr td {
-      padding: 8px 10px !important;
-      text-align: left !important;
-      position: relative;
-      padding-left: 50%;
-      border: none !important;
-      border-bottom: 1px solid #eee !important;
-      vertical-align: top !important;
-    }
+.order-date {
+    color: #666;
+    font-size: 0.9rem;
+}
 
-    tbody tr td:last-child {
-      border-bottom: 0 !important;
-    }
+.order-details {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
 
-    tbody tr td::before {
-      position: absolute;
-      top: 8px;
-      left: 15px;
-      width: 45%;
-      padding-right: 10px;
-      white-space: nowrap;
-      font-weight: 600;
-      color: #555;
-      content: attr(data-label);
-    }
+.order-details p {
+    margin: 5px 0;
+    color: #555;
+    font-size: 0.95rem;
+}
 
-    tbody tr td:nth-child(1)::before { content: "Product Image"; }
-    tbody tr td:nth-child(2)::before { content: "Product Name"; }
-    tbody tr td:nth-child(3)::before { content: "Quantity"; }
-    tbody tr td:nth-child(4)::before { content: "Price (₹)"; }
-    tbody tr td:nth-child(5)::before { content: "Subtotal (₹)"; }
+.total-price {
+    font-weight: 600;
+    color: #2a7f2f;
+    margin-top: 10px !important;
+}
 
-    img {
-      height: 50px !important;
-      max-width: 100% !important;
+.order-items h5 {
+    margin: 15px 0 10px;
+    color: #444;
+    font-size: 1rem;
+}
+
+.order-item {
+    display: flex;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+    gap: 15px;
+}
+
+.order-item:last-child {
+    border-bottom: none;
+}
+
+.item-image {
+    flex: 0 0 80px;
+}
+
+.item-image img {
+    width: 100%;
+    height: auto;
+    max-height: 80px;
+    object-fit: contain;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.no-img {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+    color: #999;
+    font-size: 0.8rem;
+    background: #f5f5f5;
+    border-radius: 4px;
+}
+
+.item-details {
+    flex: 1;
+}
+
+.item-name {
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.item-quantity, 
+.item-price, 
+.item-subtotal {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 3px 0;
+}
+
+.item-subtotal {
+    font-weight: 600;
+    color: #2a7f2f;
+    margin-top: 8px;
+}
+
+.no-orders {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #777;
+    padding: 30px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .orders-wrapper {
+        padding: 15px;
     }
-  }
+    
+    .order-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .order-date {
+        align-self: flex-end;
+    }
+    
+    .order-item {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .item-image {
+        flex: 0 0 auto;
+        align-self: center;
+    }
+    
+    .item-image img {
+        max-height: 120px;
+    }
+    
+    .no-img {
+        width: 120px;
+        height: 120px;
+        line-height: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    .orders-title {
+        font-size: 1.3rem;
+    }
+    
+    .customer-order {
+        padding: 15px;
+    }
+    
+    .order-box {
+        padding: 12px;
+    }
+    
+    .order-details p {
+        font-size: 0.9rem;
+    }
+    
+    .item-name {
+        font-size: 1rem;
+    }
+    
+    .item-quantity, 
+    .item-price, 
+    .item-subtotal {
+        font-size: 0.85rem;
+    }
+}
 </style>
 {% endblock %}
