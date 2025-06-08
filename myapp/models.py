@@ -1,10 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User  
 from django.conf import settings 
+from cloudinary.models import CloudinaryField
 
 class Product(models.Model):
     name = models.CharField(max_length=255)
-    image = models.ImageField(upload_to='products/')
+    image = CloudinaryField('image')
     price = models.DecimalField(max_digits=10, decimal_places=2)
     description = models.TextField(default="No description available")
     

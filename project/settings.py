@@ -7,6 +7,23 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 
+
+cloudinary.config(
+    cloud_name=config("CLOUD_NAME"),
+    api_key=config("API_KEY"),
+    api_secret=config("API_SECRET"),
+    secure=True
+)
+
+# Cloudinary Storage for Django
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config("CLOUD_NAME"),
+    'API_KEY': config("API_KEY"),
+    'API_SECRET': config("API_SECRET")
+}
+
+
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config("SECRET_KEY")
@@ -31,6 +48,8 @@ INSTALLED_APPS = [
 
     'cloudinary',
     'cloudinary_storage',
+    
+    
 ]
 
 MIDDLEWARE = [
@@ -117,11 +136,7 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': config("CLOUD_NAME"),
-    'API_KEY': config("API_KEY"),
-    'API_SECRET':config("API_SECRET"),
-}
+
 
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
