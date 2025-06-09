@@ -97,7 +97,30 @@
         margin: 10px 0;
     }
 
-    .product-card a.button-link {
+    .product-card form {
+        margin-top: 10px;
+    }
+
+    .quantity-input {
+        width: 70px;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        text-align: center;
+        outline: none;
+        margin-bottom: 12px;
+        transition: border-color 0.3s, box-shadow 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        background-color: #f9f9f9;
+    }
+
+    .quantity-input:focus {
+        border-color: #1e1e2f;
+        box-shadow: 0 0 8px rgba(30, 30, 47, 0.2);
+    }
+
+    .button-link {
         display: inline-block;
         padding: 12px 25px;
         background: linear-gradient(135deg, #1e1e2f, #2c2c3e);
@@ -108,9 +131,10 @@
         text-decoration: none;
         transition: all 0.3s ease;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        border: none;
     }
 
-    .product-card a.button-link:hover {
+    .button-link:hover {
         transform: translateY(-5px);
         background: linear-gradient(135deg, #2c2c3e, #1e1e2f);
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
@@ -140,8 +164,15 @@
         <h3>{{ ducts.name }}</h3>
         <p>{{ ducts.description }}</p>
         <p class="price">₹{{ ducts.price }}</p>
-        <a href="{% url 'add_to_cart' ducts.id %}" class="button-link">Add to Cart</a>
+
+        <form method="POST" action="{% url 'add_to_cart' ducts.id %}">
+            {% csrf_token %}
+            <input type="number" name="quantity" value="1" min="1" required class="quantity-input">
+            <br>
+            <button type="submit" class="button-link">Add to Cart</button>
+        </form>
     </div>
     {% endfor %}
 </section>
+
 {% endblock content %}
