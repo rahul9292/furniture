@@ -334,9 +334,9 @@
                         </div>
                         <span>{{ item.name }}</span>
                     </td>
-                    <td data-label="Price"><span>₹{{ item.price }}</span></td>
+                    <td data-label="Price"><span>₹ {{ item.price }}</span></td>
                     <td data-label="Quantity"><span>{{ item.quantity }}</span></td>
-                    <td data-label="Total"><span>₹{{ item.total }}</span></td>
+                    <td data-label="Total"><span>₹ {{ item.total }}</span></td>
                     <td data-label="Actions">
                         <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-remove">Remove</a>
                     </td>
@@ -345,7 +345,7 @@
             </tbody>
         </table>
 
-        <div class="total-price">Total Price: ₹{{ total_price }}</div>
+        <div class="total-price">Total Price: ₹ {{ total_price }}</div>
         
         <div class="button-group">
             <a href="{% url 'clear_cart' %}" class="btn btn-clear">Clear Cart</a>

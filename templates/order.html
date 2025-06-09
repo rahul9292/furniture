@@ -139,12 +139,12 @@
 
     <div class="order-summary">
       <h3>Order Summary</h3>
-      <p><strong>Total Price:</strong> ₹{{ total_price }}</p>
+      <p><strong>Total Price:</strong> ₹ {{ total_price }}</p>
 
       {% if cart_items %}
       <ul>
         {% for item in cart_items %}
-        <li><strong>{{ item.name }}</strong> (x{{ item.quantity }}) - ₹{{ item.total }}</li>
+        <li><strong>{{ item.name }}</strong> (x{{ item.quantity }}) - ₹ {{ item.total }}</li>
         {% endfor %}
       </ul>
       {% else %}

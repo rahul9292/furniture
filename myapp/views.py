@@ -53,22 +53,40 @@ def view_cart(request):
     })
 
 
+from django.views.decorators.http import require_POST
+
+@require_POST
 @login_required(login_url='signup')
 def add_to_cart(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     cart = request.session.get('cart', {})
 
+    # Get quantity from the form; default to 1 if not provided or invalid
+    try:
+        quantity = int(request.POST.get('quantity', 1))
+    except ValueError:
+        quantity = 1
+
+    # Enforce max quantity of 10
+    if quantity < 1:
+        quantity = 1
+    elif quantity > 10:
+        quantity = 10
+
+    
     if str(product_id) in cart:
-        if cart[str(product_id)] < 10:
-            cart[str(product_id)] += 1
+        if cart[str(product_id)] + quantity <= 10:
+            cart[str(product_id)] += quantity
         else:
-            messages.warning(request, "Maximum quantity reached.")
+            cart[str(product_id)] = 10
+            messages.warning(request, "Maximum quantity for this product is 10.")
     else:
-        cart[str(product_id)] = 1
+        cart[str(product_id)] = quantity
 
     request.session['cart'] = cart
     request.session.modified = True
     return redirect('view_cart')
+
 
 
 @login_required(login_url='signup')
