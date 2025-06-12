@@ -5,157 +5,142 @@
 <style>
     body {
         font-family: 'Poppins', sans-serif;
-        background-color: #f4f5fa; /* Soft background matching darker navbar */
+        background-color: #f4f5fa;
         margin: 0;
         padding: 0;
         color: #333;
     }
 
-    header {
-        background: linear-gradient(135deg, #1e1e2f, #2c2c3e); /* Match with navbar */
-        color: white;
-        padding: 40px 20px;
-        text-align: center;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    header h1 {
-        font-size: 3em;
-        margin: 0;
-        font-weight: 600;
-        letter-spacing: 2px;
-    }
-
-    header p {
-        font-size: 1.2em;
-        margin-top: 10px;
-        font-weight: 300;
-    }
-
     .products {
         max-width: 1200px;
-        margin: 40px auto;
+        margin: 20px auto;
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 30px;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
         padding: 20px;
     }
 
     .product-card {
-        background: #fff;
-        padding: 20px;
-        border-radius: 20px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        padding: 16px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
         text-align: center;
-        transition: all 0.3s ease;
-        overflow: hidden;
-        position: relative;
-        border: 1px solid #eee;
-        cursor: pointer;
+        transition: box-shadow 0.2s ease;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
     .product-card:hover {
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-        transform: translateY(-5px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     }
 
     .product-card img {
         width: 100%;
-        height: 250px;
+        height: 200px;
         object-fit: contain;
-        border-radius: 15px;
-        transition: transform 0.4s ease, box-shadow 0.4s ease;
-        background-color: #f9f9f9;
-    }
-
-    .product-card:hover img {
-        transform: scale(1.2);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        margin-bottom: 12px;
+        border-radius: 6px;
     }
 
     .product-card h3 {
-        margin-top: 15px;
-        font-size: 20px;
-        font-weight: 600;
-        color: #333;
+        font-size: 18px;
+        margin: 10px 0;
     }
 
     .product-card p {
-        color: #777;
         font-size: 14px;
-        margin: 10px 0;
+        color: #666;
+        margin: 8px 0;
     }
 
-    .product-card .price {
-        font-size: 18px;
+    .price {
         font-weight: bold;
-        color: #1e1e2f;
-        margin: 10px 0;
+        color: #000;
+        margin-top: 10px;
     }
 
-    .product-card button {
-        padding: 12px 25px;
-        background: linear-gradient(135deg, #1e1e2f, #2c2c3e);
+    .quantity-input {
+        width: 60px;
+        padding: 8px;
+        font-size: 14px;
+        text-align: center;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        margin-top: 10px;
+    }
+
+    .button-link {
+        display: inline-block;
+        padding: 10px 20px;
+        margin-top: 10px;
+        background: #1e1e2f;
         color: #fff;
         border: none;
-        border-radius: 30px;
+        border-radius: 6px;
         cursor: pointer;
-        font-size: 16px;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        font-size: 14px;
+        transition: background 0.3s ease;
+        text-decoration: none;
     }
 
-    .product-card button:hover {
-        transform: translateY(-5px);
-        background: linear-gradient(135deg, #2c2c3e, #1e1e2f);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    @media (max-width: 1024px) {
-        .products {
-            grid-template-columns: repeat(2, 1fr);
-        }
+    .button-link:hover {
+        background: #2c2c3e;
     }
 
     @media (max-width: 768px) {
         .products {
             grid-template-columns: 1fr;
+            padding: 10px;
         }
-    }
 
-    /* Search results heading styling */
-    .search-heading {
-        max-width: 1200px;
-        margin: 40px auto 20px;
-        color: #1e1e2f;
-        font-size: 28px;
-        font-weight: 600;
-        text-align: center;
-    }
+        .product-card {
+            padding: 12px;
+        }
 
-    /* No results message */
-    .no-results {
-        max-width: 1200px;
-        margin: 40px auto;
-        text-align: center;
-        font-size: 18px;
-        color: #888;
+        .product-card img {
+            height: 180px;
+        }
+
+        .product-card h3 {
+            font-size: 16px;
+        }
+
+        .product-card p,
+        .price {
+            font-size: 13px;
+        }
+
+        .quantity-input {
+            width: 50px;
+            font-size: 13px;
+        }
+
+        .button-link {
+            font-size: 13px;
+            padding: 8px 16px;
+        }
     }
 </style>
 
 <section class="products">
     {% for product in results %}
     <div class="product-card">
-        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        <img src="{{ product.image.url }}" alt="{{ product.name|default:'Product Image' }}">
         <h3>{{ product.name }}</h3>
         <p>{{ product.description }}</p>
         <p class="price">₹{{ product.price }}</p>
-        <a href="{% url 'add_to_cart' product.id %}">
-            <button>Add to Cart</button>
-        </a>
+
+        <form method="POST" action="{% url 'add_to_cart' product.id %}">
+            {% csrf_token %}
+            <input type="number" name="quantity" value="1" min="1" required class="quantity-input">
+            <br>
+            <button type="submit" class="button-link">Add to Cart</button>
+        </form>
     </div>
     {% empty %}
-    <p class="no-results">No products found.</p>
+    <p style="text-align:center; font-size:18px; color:#888;">No products found.</p>
     {% endfor %}
 </section>
-{% endblock %}
+{% endblock content %}
