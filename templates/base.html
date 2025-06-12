@@ -7,225 +7,243 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jay Ganesh Furniture</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(120deg, #a0522d, #deb887);
-            color: #fff;
-            min-height: 100vh;
-        }
+   <style>
+    body {
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #f3f0eb, #e8e5de);
+        color: #333;
+        min-height: 100vh;
+    }
 
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(139, 69, 19, 0.85);
+        padding: 15px 30px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        position: sticky;
+        top: 0;
+        z-index: 999;
+        flex-wrap: wrap;
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .logo {
+        font-size: 30px;
+        font-weight: 700;
+        color: #fff8dc;
+        text-decoration: none;
+        text-shadow: 1px 1px 3px #000;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .logo img {
+        height: 42px;
+        width: auto;
+        filter: drop-shadow(0 0 4px #000);
+    }
+
+    .nav-links {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .nav-links li {
+        margin: 0 15px;
+    }
+
+    .nav-links a {
+        color: #fff8dc;
+        text-decoration: none;
+        font-size: 16px;
+        position: relative;
+        padding: 10px 14px;
+        border-radius: 6px;
+        transition: 0.3s ease;
+    }
+
+    .nav-links a:hover {
+        background: rgba(255, 248, 220, 0.1);
+    }
+
+    .nav-links a::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        background: #fff8dc;
+        left: 50%;
+        bottom: -5px;
+        transform: translateX(-50%);
+        transition: 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+        width: 100%;
+    }
+
+    .cart-icon {
+        font-size: 24px;
+        color: #fff8dc;
+        text-decoration: none;
+        margin-left: 20px;
+    }
+
+    .cart-icon:hover {
+        color: #ffd700;
+    }
+
+    .menu-icon {
+        display: none;
+        font-size: 30px;
+        cursor: pointer;
+        color: #fff8dc;
+    }
+
+    #menu-toggle {
+        display: none;
+    }
+
+    /* Responsive tweaks for tablets and below */
+    @media (max-width: 768px) {
         .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(139, 69, 19, 0.9);
-            padding: 15px 30px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            position: sticky;
-            top: 0;
-            z-index: 999;
-            flex-wrap: wrap;
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 8px 20px; /* reduced vertical padding */
         }
 
         .logo {
-            font-size: 30px;
-            font-weight: 700;
-            text-decoration: none;
-            color: #fff8dc;
-            text-shadow: 1px 1px 3px #000;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            font-size: 18px; /* smaller logo text */
+            gap: 6px;
         }
 
         .logo img {
-            height: 42px;
-            width: auto;
-            filter: drop-shadow(0 0 4px #000);
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        .nav-links li {
-            margin: 0 15px;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #fff8dc;
-            font-size: 16px;
-            position: relative;
-            transition: color 0.3s ease;
-            padding: 10px 14px;
-            border-radius: 6px;
-        }
-
-        .nav-links a:hover {
-            background: rgba(255, 248, 220, 0.1);
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            background: #fff8dc;
-            left: 50%;
-            bottom: -5px;
-            transition: 0.3s ease-in-out;
-            transform: translateX(-50%);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .cart-icon {
-            font-size: 24px;
-            color: #fff8dc;
-            text-decoration: none;
-            margin-left: 20px;
-        }
-
-        .cart-icon:hover {
-            color: #ffd700;
+            height: 28px; /* smaller logo image */
         }
 
         .menu-icon {
-            display: none;
-            font-size: 30px;
-            cursor: pointer;
-            color: #fff8dc;
+            display: block;
+            font-size: 22px; /* smaller hamburger menu */
+            margin-top: 2px;
         }
 
-        #menu-toggle {
-            display: none;
-        }
-
-        @media (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .menu-icon {
-                display: block;
-            }
-
-            .nav-links {
-                flex-direction: column;
-                width: 100%;
-                display: none;
-                background: rgba(139, 69, 19, 0.95);
-                padding: 10px 0;
-            }
-
-            .nav-links li {
-                margin: 10px 0;
-                text-align: center;
-                width: 100%;
-            }
-
-            #menu-toggle:checked + .menu-icon + .nav-links {
-                display: flex;
-            }
-
-            .cart-icon {
-                margin: 10px 0;
-            }
-        }
-
-        /* Search Bar Styling */
-        .search-bar-wrapper {
-            display: flex;
-            justify-content: center;
-            padding: 15px 20px;
-            background: transparent;
-        }
-
-        .search-bar {
-            display: flex;
+        .nav-links {
+            flex-direction: column;
             width: 100%;
-            max-width: 600px;
-            background: #ffffff;
-            border-radius: 30px;
-            overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            display: none;
+            padding: 8px 0;
+            background: rgba(139, 69, 19, 0.95);
         }
 
+        .nav-links li {
+            margin: 3px 0; /* less vertical margin */
+            width: 100%;
+            text-align: left;
+            padding: 0 15px;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            padding: 6px 0; /* less vertical padding */
+        }
+
+        #menu-toggle:checked + .menu-icon + .nav-links {
+            display: flex;
+        }
+
+        .cart-icon {
+            margin: 4px 0;
+            font-size: 20px;
+        }
+    }
+
+    /* Responsive tweaks for phones */
+    @media (max-width: 600px) {
         .search-bar input {
-            flex: 1;
-            border: none;
-            padding: 10px 15px;
-            font-size: 16px;
-            outline: none;
+            font-size: 14px;
+            padding: 8px 10px;
         }
 
         .search-bar button {
-            background: #a0522d;
-            border: none;
-            color: #fff;
-            padding: 10px 20px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-            font-weight: bold;
+            padding: 8px 12px;
+            font-size: 14px;
         }
 
-        .search-bar button:hover {
-            background: #80411e;
+        .logo {
+            font-size: 16px;
         }
 
-        @media (max-width: 600px) {
-            .search-bar input {
-                font-size: 14px;
-                padding: 10px;
-            }
-
-            .search-bar button {
-                padding: 10px 14px;
-                font-size: 14px;
-            }
-
-            .nav-links a {
-                font-size: 15px;
-            }
-
-            .logo {
-                font-size: 24px;
-            }
+        .nav-links a {
+            font-size: 13px;
         }
-    </style>
+    }
+
+    .search-bar-wrapper {
+        display: flex;
+        justify-content: center;
+        padding: 15px 20px;
+    }
+
+    .search-bar {
+        display: flex;
+        width: 100%;
+        max-width: 600px;
+        background: #ffffff;
+        border-radius: 30px;
+        overflow: hidden;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .search-bar input {
+        flex: 1;
+        border: none;
+        padding: 10px 15px;
+        font-size: 16px;
+        outline: none;
+    }
+
+    .search-bar button {
+        background: #a0522d;
+        border: none;
+        color: #fff;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        font-weight: bold;
+    }
+
+    .search-bar button:hover {
+        background: #6b2c0d;
+    }
+</style>
+
 </head>
 <body>
 
-    <!-- Navbar -->
-    <nav class="navbar">
-        <a href="{% url 'home' %}" class="logo">
-            <img src="{% static 'media/furniture logo.webp' %}" alt="Kaaji Logo">
-            <span>KAAJI furniture</span>
-        </a>
+<!-- Navbar -->
+<nav class="navbar">
+    <a href="{% url 'home' %}" class="logo">
+        <img src="{% static 'media/furniture logo.webp' %}" alt="Kaaji Logo">
+        <span>KAAJI furniture</span>
+    </a>
 
-        <!-- Mobile Menu Toggle -->
-        <input type="checkbox" id="menu-toggle">
-        <label for="menu-toggle" class="menu-icon">☰</label>
+    <input type="checkbox" id="menu-toggle">
+    <label for="menu-toggle" class="menu-icon">☰</label>
 
-        <!-- Navigation Links -->
-        <ul class="nav-links">
-            <li><a href="{% url 'home' %}">Home</a></li>
-            <li><a href="{% url 'about' %}">About</a></li>
-            <li><a href="{% url 'contactus' %}">Contact us</a></li>
+    <ul class="nav-links">
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'about' %}">About</a></li>
+        <li><a href="{% url 'contactus' %}">Contact us</a></li>
 
-            {% if user.is_authenticated %}
-                {% if not user.is_staff %}
+        {% if user.is_authenticated %}
+            {% if not user.is_staff %}
                 <li style="position: relative;">
                     <a href="{% url 'latest_order_detail' %}">
                         My Order
@@ -236,13 +254,13 @@
                         {% endif %}
                     </a>
                 </li>
-                {% endif %}
-                <li><a href="{% url 'account_logout' %}">Logout</a></li>
-            {% else %}
-                <li><a href="{% url 'signup' %}">Signup</a></li>
             {% endif %}
+            <li><a href="{% url 'account_logout' %}">Logout</a></li>
+        {% else %}
+            <li><a href="{% url 'signup' %}">Signup</a></li>
+        {% endif %}
 
-            {% if user.is_staff %}
+        {% if user.is_staff %}
             <li>
                 <a href="{% url 'admin-orders' %}">
                     View Orders
@@ -253,26 +271,25 @@
                     {% endif %}
                 </a>
             </li>
-            {% endif %}
-        </ul>
-
-        <!-- Cart Icon -->
-        {% if user.is_authenticated and not user.is_staff %}
-            <a href="{% url 'view_cart' %}" class="cart-icon">🛒</a>
         {% endif %}
-    </nav>
+    </ul>
 
-    <!-- Search Bar Below Navbar -->
-    <div class="search-bar-wrapper">
-        <form method="get" action="{% url 'search_results' %}" class="search-bar">
-            <input type="text" name="q" placeholder="Search furniture...">
-            <button type="submit">Search</button>
-        </form>
-    </div>
+    {% if user.is_authenticated and not user.is_staff %}
+        <a href="{% url 'view_cart' %}" class="cart-icon">🛒</a>
+    {% endif %}
+</nav>
 
-    <!-- Main Content -->
-    {% block content %}
-    {% endblock content %}
+<!-- Search Bar -->
+<div class="search-bar-wrapper">
+    <form method="get" action="{% url 'search_results' %}" class="search-bar">
+        <input type="text" name="q" placeholder="Search furniture...">
+        <button type="submit">Search</button>
+    </form>
+</div>
+
+<!-- Dynamic Content Area -->
+{% block content %}
+{% endblock content %}
 
 </body>
 </html>
