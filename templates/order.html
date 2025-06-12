@@ -2,6 +2,7 @@
 
 {% block content %}
 <style>
+  /* Wrap all checkout styles under checkout-wrapper */
   .checkout-wrapper {
     display: flex;
     justify-content: center;
@@ -20,6 +21,7 @@
     box-sizing: border-box;
   }
 
+  /* Headings inside checkout */
   .checkout-container h1,
   .checkout-container h2,
   .checkout-container h3 {
@@ -27,16 +29,19 @@
     margin-bottom: 20px;
   }
 
+  /* Form inside checkout */
   .checkout-container form {
     width: 100%;
   }
 
+  /* Labels inside checkout */
   .checkout-container label {
     display: block;
     margin-bottom: 6px;
     font-weight: 600;
   }
 
+  /* Inputs, textareas, selects ONLY inside checkout */
   .checkout-container input,
   .checkout-container textarea,
   .checkout-container select {
@@ -56,6 +61,7 @@
     box-shadow: 0 0 4px rgba(30, 30, 47, 0.3);
   }
 
+  /* Button inside checkout */
   .checkout-container .btn {
     width: 100%;
     max-width: 280px;
@@ -89,6 +95,7 @@
     font-weight: 500;
   }
 
+  /* RESPONSIVE */
   @media (max-width: 768px) {
     .checkout-container {
       padding: 20px;
@@ -132,12 +139,13 @@
   }
 </style>
 
+
 <div class="checkout-wrapper">
   <div class="checkout-container">
     <h1>Checkout</h1>
-    <h2>Review Your Order & Enter Details</h2>
+    <h2>Review Your Order &amp; Enter Details</h2>
 
-    <div class="order-summary">
+    <div class="order-summary" aria-label="Order summary">
       <h3>Order Summary</h3>
       <p><strong>Total Price:</strong> ₹ {{ total_price }}</p>
 
@@ -148,11 +156,11 @@
         {% endfor %}
       </ul>
       {% else %}
-        <p>Your cart is empty.</p>
+      <p>Your cart is empty.</p>
       {% endif %}
     </div>
 
-    <form action="{% url 'process_order' %}" method="post">
+    <form action="{% url 'process_order' %}" method="post" novalidate>
       {% csrf_token %}
       <h3>Shipping Details</h3>
 
@@ -170,8 +178,8 @@
 
       <input type="hidden" name="total_price" value="{{ total_price }}">
 
-      <button type="submit" class="btn">Submit Order</button>
+      <button type="submit" class="btn" aria-label="Submit your order">Submit Order</button>
     </form>
   </div>
 </div>
-{% endblock content %}
+{% endblock %}

@@ -5,29 +5,29 @@
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
   .contact-page {
-    max-width: 600px;
-    margin: 80px auto;
-    padding: 40px 30px;
+    max-width: 400px; /* smaller width */
+    margin: 60px auto;
+    padding: 30px 25px;
     font-family: 'Poppins', sans-serif;
-    color: #eee;
+    color: #ddd;
     text-align: center;
-    background: #00264d; /* Deep blue background */
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0, 38, 77, 0.5); /* subtle shadow in main color */
+    background: #001f3f; /* slightly darker blue */
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 31, 63, 0.6);
     position: relative;
     overflow: hidden;
-    border: 2px solid #004080; /* solid border with main blue */
+    border: 1.5px solid #003366;
   }
 
-  /* Subtle glowing border animation */
+  /* Glowing border animation */
   .contact-page::before {
     content: "";
     position: absolute;
-    top: -4px; left: -4px; right: -4px; bottom: -4px;
-    border-radius: 19px;
+    top: -3px; left: -3px; right: -3px; bottom: -3px;
+    border-radius: 16px;
     background: transparent;
-    box-shadow: 0 0 15px 4px rgba(0, 64, 128, 0.5);
-    opacity: 0.8;
+    box-shadow: 0 0 12px 3px rgba(0, 51, 102, 0.5);
+    opacity: 0.7;
     animation: pulseGlow 4s ease-in-out infinite;
     pointer-events: none;
     z-index: -1;
@@ -35,55 +35,55 @@
 
   @keyframes pulseGlow {
     0%, 100% {
-      box-shadow: 0 0 15px 4px rgba(0, 64, 128, 0.5);
-      opacity: 0.8;
+      box-shadow: 0 0 12px 3px rgba(0, 51, 102, 0.5);
+      opacity: 0.7;
     }
     50% {
-      box-shadow: 0 0 25px 8px rgba(0, 64, 128, 0.9);
+      box-shadow: 0 0 22px 6px rgba(0, 51, 102, 0.9);
       opacity: 1;
     }
   }
 
   .contact-page h1 {
-    margin-bottom: 30px;
-    color: #fff;
+    margin-bottom: 24px;
+    color: #f0f0f0;
     font-weight: 700;
-    font-size: 3rem;
-    letter-spacing: 2px;
+    font-size: 2.2rem;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
     animation: fadeInDown 1s ease forwards;
   }
 
   .contact-info p {
-    font-size: 1.25rem;
-    margin: 16px 0;
-    color: #cbd5e1; /* lighter blue-gray */
+    font-size: 1.1rem;
+    margin: 12px 0;
+    color: #a8bcd9; /* lighter muted blue */
     opacity: 0;
     animation: fadeInUp 1s ease forwards;
   }
 
   .contact-info p:nth-child(1) {
-    animation-delay: 0.3s;
+    animation-delay: 0.25s;
   }
   .contact-info p:nth-child(2) {
-    animation-delay: 0.5s;
+    animation-delay: 0.45s;
   }
   .contact-info p:nth-child(3) {
-    animation-delay: 0.7s;
+    animation-delay: 0.65s;
   }
 
   .social-links {
-    margin-top: 35px;
+    margin-top: 30px;
     opacity: 0;
     animation: fadeInUp 1s ease forwards;
-    animation-delay: 1s;
+    animation-delay: 0.9s;
   }
 
   .social-links a {
-    margin: 0 20px;
+    margin: 0 14px;
     display: inline-block;
-    font-size: 2rem;
-    color: #004080;
+    font-size: 1.7rem;
+    color: #003366;
     font-weight: 600;
     text-decoration: none;
     transition: all 0.3s ease;
@@ -94,26 +94,27 @@
     content: "";
     position: absolute;
     width: 0;
-    height: 3px;
-    background: #003366;
+    height: 2.5px;
+    background: #001f3f;
     left: 0;
-    bottom: -6px;
+    bottom: -5px;
     transition: width 0.3s ease;
     border-radius: 3px;
   }
 
   .social-links a:hover {
-    color: #00264d;
+    color: #001f3f;
   }
 
   .social-links a:hover::after {
     width: 100%;
   }
 
+  /* Animations */
   @keyframes fadeInDown {
     0% {
       opacity: 0;
-      transform: translateY(-30px);
+      transform: translateY(-20px);
     }
     100% {
       opacity: 1;
@@ -124,11 +125,42 @@
   @keyframes fadeInUp {
     0% {
       opacity: 0;
-      transform: translateY(30px);
+      transform: translateY(20px);
     }
     100% {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 480px) {
+    .contact-page {
+      margin: 40px 15px;
+      padding: 25px 20px;
+      max-width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 31, 63, 0.5);
+    }
+
+    .contact-page h1 {
+      font-size: 1.8rem;
+      margin-bottom: 18px;
+    }
+
+    .contact-info p {
+      font-size: 1rem;
+      margin: 10px 0;
+    }
+
+    .social-links a {
+      margin: 0 12px;
+      font-size: 1.4rem;
+    }
+
+    .social-links a::after {
+      height: 2px;
+      bottom: -4px;
     }
   }
 </style>
@@ -138,7 +170,7 @@
   <div class="contact-info">
     <p>📞 Phone: 9823162755</p>
     <p>📧 Email: rt273765@gmail.com</p>
-    <p>📍 Address: D chaur,indrawatiGaupalika, Sindhupalchok</p>
+    <p>📍 Address: D chaur, Indrawati Gaupalika, Sindhupalchok</p>
   </div>
 
   <div class="social-links" aria-label="Social media links">
