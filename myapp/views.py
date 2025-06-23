@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import JsonResponse
 from .models import Product, Order, OrderItem
+from django.views.decorators.http import require_POST
 
 
 def index(request):
@@ -53,7 +54,7 @@ def view_cart(request):
     })
 
 
-from django.views.decorators.http import require_POST
+
 
 @require_POST
 @login_required(login_url='signup')
